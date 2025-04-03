@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Phân tích URL</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      input[type="text"] {
+        width: 600px;
+        padding: 5px;
+      }
+      button {
+        padding: 5px 10px;
+        margin-left: 5px;
+      }
+      pre {
+        background: #f0f0f0;
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Phân tích URL</h1>
+    <input type="text" id="urlInput" placeholder="Nhập URL vào đây" />
+    <button onclick="parseURL()">Phân tích</button>
+
+    <pre id="output"></pre>
+
+    <script>
+      function parseURL() {
+        var urlInput = document.getElementById("urlInput").value.trim();
+        var outputElem = document.getElementById("output");
+
+        try {
+          // Tạo đối tượng URL để lấy phần query string
+          var urlObj = new URL(urlInput);
+          var params = new URLSearchParams(urlObj.search);
+
+          // Xây dựng nội dung hiển thị theo thứ tự mong muốn
+          var output = "";
+          output += "Họ và tên: " + params.get("1") + "\n";
+          output += "Ngày sinh: " + params.get("2") + "\n";
+          output += "Tổ hợp: " + params.get("3") + "\n";
+          output += "Sex: " + params.get("4") + "\n";
+          output += "Tổ hợp: " + params.get("5") + "\n";
+          output += "Số báo danh: " + params.get("6") + "\n";
+          output += "Ngày thi: " + params.get("7") + "\n";
+          output += "Số CCCD: " + params.get("8") + "\n";
+          output += "Điểm tư duy định lượng: " + params.get("11") + "\n";
+          output += "Điểm tư duy định tính: " + params.get("13") + "\n";
+          output += "Điểm khoa học/tiếng Anh: " + params.get("14") + "\n";
+          output +=
+            "Tỉ lệ thí sinh thấp hơn hoặc bằng điểm (đang bị sai): " +
+            params.get("12");
+
+          outputElem.textContent = output;
+        } catch (error) {
+          outputElem.textContent = "Lỗi khi phân tích URL: " + error.message;
+        }
+      }
+    </script>
+  </body>
+</html>
