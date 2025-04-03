@@ -21,6 +21,13 @@
         padding: 10px;
         border: 1px solid #ccc;
       }
+      a {
+        color: blue;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
@@ -55,9 +62,35 @@
           output += "Điểm khoa học/tiếng Anh: " + params.get("14") + "\n";
           output +=
             "Tỉ lệ thí sinh thấp hơn hoặc bằng điểm (đang bị sai): " +
-            params.get("12");
+            params.get("12") +
+            "\n\n";
 
-          outputElem.textContent = output;
+          // Tạo hyperlink "URL chuẩn:" dựa trên các key 0, 8, 9, 18
+          var baseURL =
+            "https://phieubaodiem.hsa.edu.vn/report/public/score-report?";
+          var standardURL =
+            baseURL +
+            "0=" +
+            encodeURIComponent(params.get("0") || "") +
+            "&" +
+            "8=" +
+            encodeURIComponent(params.get("8") || "") +
+            "&" +
+            "9=" +
+            encodeURIComponent(params.get("9") || "") +
+            "&" +
+            "18=" +
+            encodeURIComponent(params.get("18") || "");
+
+          output +=
+            'URL chuẩn: <a href="' +
+            standardURL +
+            '" target="_blank">' +
+            standardURL +
+            "</a>";
+
+          // Hiển thị kết quả (dùng innerHTML để hỗ trợ hyperlink)
+          outputElem.innerHTML = output.replace(/\n/g, "<br>");
         } catch (error) {
           outputElem.textContent = "Lỗi khi phân tích URL: " + error.message;
         }
